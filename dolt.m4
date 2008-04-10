@@ -68,7 +68,7 @@ if test ! -d "$libobjdir" ; then
 fi
 pic_object="$libobjdir/$objbase.o"
 args@<:@$objarg@:>@="$pic_object"
-"${args@<:@@@:>@}" -fPIC -DPIC
+"${args@<:@@@:>@}" -fPIC -DPIC || exit $?
 __DOLTCOMPILE__EOF__
     fi
 
@@ -81,11 +81,11 @@ args@<:@$objarg@:>@="$non_pic_object"
 __DOLTCOMPILE__EOF__
         if test x$enable_shared = xyes; then
             cat <<'__DOLTCOMPILE__EOF__' >>doltcompile
-"${args@<:@@@:>@}" >/dev/null 2>&1
+"${args@<:@@@:>@}" >/dev/null 2>&1 || exit $?
 __DOLTCOMPILE__EOF__
         else
             cat <<'__DOLTCOMPILE__EOF__' >>doltcompile
-"${args@<:@@@:>@}"
+"${args@<:@@@:>@}" || exit $?
 __DOLTCOMPILE__EOF__
         fi
     fi
