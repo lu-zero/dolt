@@ -22,7 +22,8 @@ if test x$GCC != xyes; then
     dolt_supported=no
 fi
 case $host in
-i?86-*-linux*|x86_64-*-linux*) ;;
+i?86-*-linux*|x86_64-*-linux*|powerpc-*-linux*) ;;
+amd64-*-freebsd*|i386-*-freebsd*|ia64-*-freebsd*) ;;
 *) dolt_supported=no ;;
 esac
 if test x$dolt_supported = xno ; then
