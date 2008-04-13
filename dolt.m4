@@ -60,9 +60,10 @@ dnl Write out shared compilation code.
         cat <<'__DOLTCOMPILE__EOF__' >>doltcompile
 libobjdir="${obj%$objbase}.libs"
 if test ! -d "$libobjdir" ; then
-    mkdir "$libobjdir"
+    mkdir_out="$(mkdir "$libobjdir" 2>&1)"
     mkdir_ret=$?
     if test "$mkdir_ret" -ne 0 && test ! -d "$libobjdir" ; then
+	echo "$mkdir_out" 1>&2
         exit $mkdir_ret
     fi
 fi
