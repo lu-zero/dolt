@@ -28,6 +28,8 @@ amd64-*-freebsd*|i?86-*-freebsd*|ia64-*-freebsd*) ;;
 esac
 if test x$dolt_supported = xno ; then
     AC_MSG_RESULT([no, falling back to libtool])
+    LTCOMPILE='$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(COMPILE)'
+    LTCXXCOMPILE='$(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXXCOMPILE)'
 else
     AC_MSG_RESULT([yes, replacing libtool])
 
@@ -127,9 +129,9 @@ __DOLTCOMPILE__EOF__
 dnl Done writing out doltcompile; substitute it for libtool compilation.
     chmod +x doltcompile
     LTCOMPILE='$(top_builddir)/doltcompile $(COMPILE)'
-    AC_SUBST(LTCOMPILE)
     LTCXXCOMPILE='$(top_builddir)/doltcompile $(CXXCOMPILE)'
-    AC_SUBST(LTCXXCOMPILE)
 fi
+AC_SUBST(LTCOMPILE)
+AC_SUBST(LTCXXCOMPILE)
 # end dolt
 ])
