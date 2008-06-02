@@ -130,6 +130,37 @@ dnl Done writing out doltcompile; substitute it for libtool compilation.
     chmod +x doltcompile
     LTCOMPILE='$(top_builddir)/doltcompile $(COMPILE)'
     LTCXXCOMPILE='$(top_builddir)/doltcompile $(CXXCOMPILE)'
+
+dnl automake ignores LTCOMPILE and LTCXXCOMPILE when it has separate CFLAGS for
+dnl a target, so write out a libtool wrapper to handle that case.
+dnl Note that doltlibtool does not handle inferred tags or option arguments
+dnl without '=', because automake does not use them.
+    cat <<__DOLTLIBTOOL__EOF__ > doltlibtool
+#!$DOLT_BASH
+__DOLTLIBTOOL__EOF__
+    cat <<'__DOLTLIBTOOL__EOF__' >>doltlibtool
+top_builddir_slash="${0%%doltlibtool}"
+: ${top_builddir_slash:=./}
+args=()
+modeok=false
+tagok=false
+for arg in "$[]@"; do
+    case "$arg" in
+        --mode=compile) modeok=true ;;
+        --tag=CC|--tag=CXX) tagok=true ;;
+        *) args+=("$arg")
+    esac
+done
+if $modeok && $tagok ; then
+    . ${top_builddir_slash}doltcompile "${args@<:@@@:>@}"
+else
+    exec ${top_builddir_slash}libtool "$[]@"
+fi
+__DOLTLIBTOOL__EOF__
+
+dnl Done writing out doltlibtool; substitute it for libtool.
+    chmod +x doltlibtool
+    LIBTOOL='$(top_builddir)/doltlibtool'
 fi
 AC_SUBST(LTCOMPILE)
 AC_SUBST(LTCXXCOMPILE)
