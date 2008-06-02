@@ -22,9 +22,16 @@ if test x$GCC != xyes; then
     dolt_supported=no
 fi
 case $host in
-i?86-*-linux*|x86_64-*-linux*|powerpc-*-linux*) ;;
-amd64-*-freebsd*|i?86-*-freebsd*|ia64-*-freebsd*) ;;
-*) dolt_supported=no ;;
+i?86-*-linux*|x86_64-*-linux*|powerpc-*-linux* \
+|amd64-*-freebsd*|i?86-*-freebsd*|ia64-*-freebsd*)
+    pic_options='-fPIC'
+    ;;
+i?86-apple-darwin*)
+    pic_options='-fno-common'
+    ;;
+*)
+    dolt_supported=no
+    ;;
 esac
 if test x$dolt_supported = xno ; then
     AC_MSG_RESULT([no, falling back to libtool])
@@ -72,7 +79,9 @@ if test ! -d "$libobjdir" ; then
 fi
 pic_object="$libobjdir/$objbase.o"
 args@<:@$objarg@:>@="$pic_object"
-"${args@<:@@@:>@}" -fPIC -DPIC || exit $?
+__DOLTCOMPILE__EOF__
+    cat <<__DOLTCOMPILE__EOF__ >>doltcompile
+"\${args@<:@@@:>@}" $pic_options -DPIC || exit \$?
 __DOLTCOMPILE__EOF__
     fi
 
