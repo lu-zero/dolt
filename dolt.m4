@@ -104,7 +104,7 @@ __DOLTCOMPILE__EOF__
 
     if test x$enable_shared = xyes; then
         cat <<'__DOLTCOMPILE__EOF__' >>doltcompile
-echo "pic_object='$pic_object'"
+echo "pic_object='.libs/${objbase}.o'"
 __DOLTCOMPILE__EOF__
     else
         cat <<'__DOLTCOMPILE__EOF__' >>doltcompile
@@ -114,7 +114,7 @@ __DOLTCOMPILE__EOF__
 
     if test x$enable_static = xyes; then
         cat <<'__DOLTCOMPILE__EOF__' >>doltcompile
-echo "non_pic_object='$non_pic_object'"
+echo "non_pic_object='${objbase}.o'"
 __DOLTCOMPILE__EOF__
     else
         cat <<'__DOLTCOMPILE__EOF__' >>doltcompile
