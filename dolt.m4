@@ -22,7 +22,7 @@ if test x$GCC != xyes; then
     dolt_supported=no
 fi
 case $host in
-i?86-*-linux*|x86_64-*-linux*|powerpc-*-linux*|sparc*-*-linux* \
+*-*-linux* \
 |amd64-*-freebsd*|i?86-*-freebsd*|ia64-*-freebsd*)
     pic_options='-fPIC'
     ;;
