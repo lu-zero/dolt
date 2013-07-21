@@ -163,6 +163,9 @@ __DOLTLIBTOOL__EOF__
 dnl Done writing out doltlibtool; substitute it for libtool.
     chmod +x doltlibtool
     LIBTOOL='$(top_builddir)/doltlibtool'
+
+DOLT_CLEANFILES="doltlibtool doltcompile"
+AC_SUBST(DOLT_CLEANFILES)
 ])
 AC_SUBST(LTCOMPILE)
 AC_SUBST(LTCXXCOMPILE)

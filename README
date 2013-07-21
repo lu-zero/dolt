@@ -11,6 +11,6 @@ steps:
 - add DOLT after the call to LT_INIT, AC_PATH_LIBTOOL, or AM_PATH_LIBTOOL in
   your configure.ac or configure.in script
 - append dolt.m4 to your project's acinclude.m4
-
+- Add DISTCLEANFILES = @DOLT_CLEANFILES@ to your Makefile.am
 For any platform Dolt does not support, it will transparently fall back to
 libtool.
