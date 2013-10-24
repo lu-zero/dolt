@@ -73,7 +73,13 @@ pic_object="$libobjdir/$objbase.o"
 args@<:@$objarg@:>@="$pic_object"
 __DOLTCOMPILE__EOF__
     cat <<__DOLTCOMPILE__EOF__ >>doltcompile
-"\${args@<:@@@:>@}" $pic_options -DPIC || exit \$?
+    pic_options="$pic_options"
+    if test x\$passthrough = xtrue; then
+        pic_options=""
+    fi
+__DOLTCOMPILE__EOF__
+    cat <<'__DOLTCOMPILE__EOF__' >>doltcompile
+${args@<:@@@:>@} $pic_options -DPIC || exit $?
 __DOLTCOMPILE__EOF__
     fi
 
@@ -149,6 +155,7 @@ for arg in "$[]@"; do
     case "$arg" in
         --mode=compile) modeok=true ;;
         --tag=CC|--tag=CXX) tagok=true ;;
+        --tag=ASM|--tag=YASM) tagok=true; passthrough=true;;
         --silent|--quiet) ;;
         *) args@<:@${#args[@]}@:>@="$arg" ;;
     esac
