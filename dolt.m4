@@ -79,7 +79,7 @@ __DOLTCOMPILE__EOF__
     fi
 __DOLTCOMPILE__EOF__
     cat <<'__DOLTCOMPILE__EOF__' >>doltcompile
-${args@<:@@@:>@} $pic_options -DPIC || exit $?
+"${args@<:@@@:>@}" $pic_options -DPIC || exit $?
 __DOLTCOMPILE__EOF__
     fi
 
